@@ -17,14 +17,14 @@ import java.io.IOException;
  * Created by bankuru on 11/2/17.
  */
 public class Main {
-    private static final String BASE_URI = "http://10.14.123.254:4055/";
+//    private static final String BASE_URI = "http://172.17.0.1:4500/";
     public static HttpServer startServer(){
         try {
             Injector injector = Guice.createInjector(new SolrModule());
             // create a resource config that scans for JAX-RS resources and providers
             // in com.example.rest package
 //        final ResourceConfig rc = new ResourceConfig().packages("com.picturestory.service.api");
-            ResourceConfig rc = new PackagesResourceConfig("com.picturestory.service.api");
+            ResourceConfig rc = new PackagesResourceConfig("org.johnmusic.service.api");
 //            rc.getProperties().put(
 //                    "com.sun.jersey.spi.container.ContainerResponseFilters",
 //                    "com.sun.jersey.api.container.filter.LoggingFilter;com.myprogram.CrossDomainFilter"
@@ -34,7 +34,7 @@ public class Main {
             // create and start a new instance of grizzly http server
             // exposing the Jersey application at BASE_URI
 
-            return GrizzlyServerFactory.createHttpServer(BASE_URI, rc, ioc);
+            return GrizzlyServerFactory.createHttpServer(getBaseURI(), rc, ioc);
         }catch (IOException e){
             System.out.println("unable to start server");
             e.printStackTrace();
@@ -56,7 +56,7 @@ public class Main {
 
     public static String getBaseURI(){
         String localIp = System.getenv("AWS_PRIVATE_IPV4");
-        String base_uri = "http://"+localIp+":4055/";
+        String base_uri = "http://" + localIp + ":4500/";
         System.out.println(base_uri);
         return base_uri;
     }
