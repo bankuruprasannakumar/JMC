@@ -61,6 +61,9 @@ public class Constants {
     public static final String INVALID_USER_ID = "Invalid UserId";
     public static final String INVALID_INSTRUMENT_ID = "Invalid InstrumentId";
     public static final String INVALID_DAY_ID = "Invalid dayId";
+    public static final String INVALID_BATCH_ID = "Invalid batchId";
+    public static final String INVALID_TIME = "Invalid time";
+    public static final String INVALID_STUDENT_ATTENDANCE_LIST = "Invalid studentAttendanceList";
     public static final String IOEXCEPTION_ERRORMESSAGE = "IO Exception";
     public static final int ERRORCODE_IOEXCEPTION = 102;
     public static final int ERRORCODE_INVALID_INPUT = 103;

@@ -11,6 +11,7 @@ public interface IStudentDetailsDao<T> {
     public List<T> getAllStudentForBatchId(int batchId);
     public List<Integer> getAllBatchIdsOfASudent(int studentId);
     public T getStudentForId(int studentId);
+    public List<Integer> getAllStudentIdsForBatchId(int batchId);
     public ResponseData getDetailedResponse();
 
 }

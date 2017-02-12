@@ -63,6 +63,38 @@ public class StudentDetailsDao implements IStudentDetailsDao<Student> {
         return null;
     }
 
+    @Override
+    public List<Integer> getAllStudentIdsForBatchId(int batchId) {
+        String query = String.format("q=%s:%s AND %s:%s &%s&%s=%s&%s=%s", Constants.STUDENT_ID,Constants.ALL, Constants.BATCH_ID, batchId, Constants.WT_JSON, Constants.START, 0, Constants.ROWS, 500);
+        ResponseData responseData = (ResponseData)mSolrAdapter.selectRequest(query);
+        if(responseData.isSuccess()){
+            try {
+                JSONObject studentResponse = new JSONObject(responseData.getData());
+                if (studentResponse.getJSONObject(Constants.RESPONSE).getInt(Constants.NUMFOUND) > 0) {
+                    JSONArray studentBatchAssociationJsonArray = studentResponse.getJSONObject(Constants.RESPONSE).getJSONArray(Constants.DOCS);
+                    Gson gson = new Gson();
+                    Type listType = new TypeToken<List<StudentBatchAssociation>>(){}.getType();
+                    ArrayList<StudentBatchAssociation> studentBatchAssociationList = gson.fromJson(studentBatchAssociationJsonArray.toString(),listType);
+                    ArrayList<Integer> studentIdList = new ArrayList<Integer>();
+                    for (StudentBatchAssociation studentBatchAssociation : studentBatchAssociationList) {
+                        studentIdList.add(studentBatchAssociation.getStudentId());
+                    }
+                    return studentIdList;
+                }
+                else {
+                    return new ArrayList<Integer>();
+                }
+            }catch (JSONException j){
+                j.printStackTrace();
+                mResponseData.setErrorMessage(j.toString());
+                mResponseData.setErrorCode(Constants.ERRORCODE_JSON_EXCEPTION);
+                mResponseData.setSuccess(false);
+                return null;
+            }
+        }
+        return null;
+    }
+
     private List<Student> getStudentsFromStudentIdList(ArrayList<Integer> studentIdList) {
         if(studentIdList == null || studentIdList.isEmpty()){
             mResponseData.setSuccess(false);
