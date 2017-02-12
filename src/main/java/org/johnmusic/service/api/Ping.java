@@ -23,5 +23,4 @@ public class Ping {
         jsonObject.put(Constants.SUCCESS, true);
         return Response.ok(jsonObject.toString(), MediaType.APPLICATION_JSON).build();
     }
-
 }

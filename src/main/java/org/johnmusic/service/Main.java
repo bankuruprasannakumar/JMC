@@ -23,7 +23,6 @@ public class Main {
             Injector injector = Guice.createInjector(new SolrModule());
             // create a resource config that scans for JAX-RS resources and providers
             // in com.example.rest package
-//        final ResourceConfig rc = new ResourceConfig().packages("com.picturestory.service.api");
             ResourceConfig rc = new PackagesResourceConfig("org.johnmusic.service.api");
 //            rc.getProperties().put(
 //                    "com.sun.jersey.spi.container.ContainerResponseFilters",
