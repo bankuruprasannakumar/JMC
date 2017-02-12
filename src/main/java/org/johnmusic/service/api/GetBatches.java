@@ -95,7 +95,15 @@ public class GetBatches {
                     JSONObject studentJSON = new JSONObject();
                     studentJSON.put(Constants.ID, student.getStudentId());
                     studentJSON.put(Constants.STUDENT_NAME, student.getStudentName());
-                    studentJSON.put(Constants.BATCH_ID_LIST, mStudentDetailsDao.getAllBatchIdsOfASudent(student.getStudentId()));
+                    JSONArray batchPaymentJSONArray = new JSONArray();
+                    List<StudentBatchAssociation> studentBatchAssociationList = mStudentBatchAssociationDetailsDao.getAllStudentBatchAssociationsForStudentId(student.getStudentId());
+                    for (StudentBatchAssociation studentBatchAssociation : studentBatchAssociationList) {
+                        JSONObject batchPaymentJSON = new JSONObject();
+                        batchPaymentJSON.put(Constants.BATCH_ID, studentBatchAssociation.getBatchId());
+                        batchPaymentJSON.put(Constants.IS_PAYMENT_DONE, studentBatchAssociation.isPaymentDone());
+                        batchPaymentJSONArray.put(batchPaymentJSON);
+                    }
+                    studentJSON.put(Constants.BATCH_ID_LIST, batchPaymentJSONArray);
                     StudentBatchAssociation studentBatchAssociation = (StudentBatchAssociation) mStudentBatchAssociationDetailsDao.getStudentBatchAssociation(student.getStudentId(), batch.getBatchId());
                     studentJSON.put(Constants.IS_PAYMENT_DONE, studentBatchAssociation.isPaymentDone());
                     studentJSON.put(Constants.IS_ALUMNI, student.isAlumni());
