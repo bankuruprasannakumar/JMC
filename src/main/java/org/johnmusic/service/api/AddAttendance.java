@@ -60,15 +60,12 @@ public class AddAttendance {
             List<Integer> presentStudentIds = new ArrayList<Integer>();
             List<Integer> absentStudentIds = new ArrayList<Integer>();
             for (StudentAttendance studentAttendance : studentAttendanceList) {
-                System.out.println(studentAttendance.isPresent());
-                System.out.println(studentAttendance.getStudentId());
                 if (studentAttendance.isPresent()) {
                     presentStudentIds.add(studentAttendance.getStudentId());
                 } else {
                     absentStudentIds.add(studentAttendance.getStudentId());
                 }
             }
-            System.out.println(presentStudentIds);
             boolean ifAllBatchStudentsPresent = listEqualsNoOrder.listEqualsNoOrder(mStudentDetailsDao.getAllStudentIdsForBatchId(batchId), UnionAndIntersionHelper.union(presentStudentIds, absentStudentIds));
             if (!ifAllBatchStudentsPresent) {
                 return ResponseBuilder.error(Constants.ERRORCODE_INVALID_INPUT, "Invalid values of studentIds given");

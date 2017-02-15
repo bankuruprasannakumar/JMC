@@ -1,5 +1,7 @@
 package org.johnmusic.service.request;
 
+import com.sun.jersey.core.util.StringIgnoreCaseKeyComparator;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -7,7 +9,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 public class StudentAttendance {
     private int studentId;
-    private boolean isPresent;
+    private String isPresent;
 
     public int getStudentId() {
         return studentId;
@@ -17,11 +19,18 @@ public class StudentAttendance {
         this.studentId = studentId;
     }
 
-    public boolean isPresent() {
+    public String getIsPresent() {
         return isPresent;
     }
 
-    public void setPresent(boolean present) {
-        isPresent = present;
+    public boolean isPresent() {
+        if ("True".equals(isPresent) || "true".equals(isPresent)) {
+            return true;
+        }
+        return false;
+    }
+
+    public void setIsPresent(String isPresent) {
+        this.isPresent = isPresent;
     }
 }
